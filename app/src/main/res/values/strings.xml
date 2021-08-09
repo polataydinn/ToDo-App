@@ -11,6 +11,8 @@
     <string name="priority_low">Priority Low</string>
     <string name="save">Save</string>
     <string name="delete">Delete</string>
+    <string name="my_title">My Title</string>
+    <string name="some_random_description">Some random description</string>
 
     <string-array name="priorities">
         <item>High Priority</item>
