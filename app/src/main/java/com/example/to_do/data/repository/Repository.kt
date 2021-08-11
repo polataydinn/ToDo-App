@@ -1,5 +1,6 @@
 package com.example.to_do.data.repository
 
+import androidx.lifecycle.LiveData
 import com.example.to_do.data.ToDoDao
 import com.example.to_do.data.models.ToDoData
 
@@ -22,4 +23,10 @@ class Repository(private val toDoDao: ToDoDao) {
     suspend fun deleteAll(){
         toDoDao.deleteAll()
     }
+
+    fun searchDatabase(searchQuery: String) = toDoDao.searchDatabase(searchQuery)
+
+    fun sortByHighPriority() = toDoDao.sortByHighPriority()
+
+    fun sortByLowPriority() = toDoDao.sortByLowPriority()
 }

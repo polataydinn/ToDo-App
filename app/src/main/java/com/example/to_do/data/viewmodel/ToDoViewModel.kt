@@ -1,6 +1,7 @@
 package com.example.to_do.data.viewmodel
 
 import android.app.Application
+import android.app.DownloadManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.to_do.data.ToDoDatabase
@@ -38,4 +39,10 @@ class ToDoViewModel(application: Application): AndroidViewModel(application) {
             repository.deleteAll()
         }
     }
+
+    fun searchDatabase(searchQuery: String) = repository.searchDatabase(searchQuery)
+
+    fun sortByHighPriority() = repository.sortByHighPriority()
+
+    fun sortByLowPriority() = repository.sortByLowPriority()
 }
