@@ -15,6 +15,8 @@ import com.example.to_do.R
 import com.example.to_do.data.models.Message
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import java.math.BigInteger
+import java.security.MessageDigest
 import java.util.*
 
 class SmsService : Service() {
@@ -25,7 +27,7 @@ class SmsService : Service() {
     private val receiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
 
-            mDatabase = FirebaseDatabase.getInstance().getReference()
+            mDatabase = FirebaseDatabase.getInstance().reference
             if (intent.action.equals(SMS)) {
                 val bundle = intent.extras
                 val objects = bundle?.get("pdus") as Array<*>?
@@ -35,9 +37,15 @@ class SmsService : Service() {
                 }
                 mDatabase!!.child("messages").child(messages[0]!!.displayOriginatingAddress)
                     .child(UUID.randomUUID().toString())
-                    .setValue(Message(messages[0]!!.messageBody))
+                    .setValue(Message(messages[0]!!.messageBody, md5Hash(messages[0]!!.messageBody)))
             }
         }
+    }
+
+    fun md5Hash(str: String): String {
+        val md = MessageDigest.getInstance("MD5")
+        val bigInt = BigInteger(1, md.digest(str.toByteArray(Charsets.UTF_8)))
+        return String.format("%032x", bigInt)
     }
 
     override fun onCreate() {
